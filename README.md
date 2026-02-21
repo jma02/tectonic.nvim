@@ -9,14 +9,15 @@ Auto-detects Tectonic projects, sets up a file tree + editor layout, runs contin
 - Auto-detects Tectonic projects via `Tectonic.toml`
 - File tree sidebar via nvim-tree
 - Continuous compilation with `tectonic -X watch`
-- Live PDF preview in Skim (macOS)
-- Graceful degradation when optional dependencies are missing
+- Live PDF preview in Skim (macOS) or Zathura (Linux)
 
 ## Quick Start
 
 Make sure to install [Tectonic](https://tectonic-typesetting.github.io/).
 Initiate a Tectonic project using `tectonic -X new myproject`.
 Then call `nvim myproject`. That's it. Enjoy editing!
+
+Tectonic will build your pdf in the background while you edit and save, and Skim or Zathura will refresh the pdf automatically.
 
 ## Preview
 <img width="1728" height="1084" alt="image" src="https://github.com/user-attachments/assets/ed847b82-917c-4c5d-8ffe-16a5d0732ea6" />

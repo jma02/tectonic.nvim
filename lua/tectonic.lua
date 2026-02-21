@@ -18,7 +18,7 @@ M.config = {
     app_name = vim.fn.has("mac") == 1 and "Skim" or "zathura",
     pdf_path = "build/default/default.pdf",
     auto_open = true,
-    close_on_exit = false,
+    close_on_exit = true,
   },
 }
 
@@ -47,6 +47,8 @@ function M.activate(root_dir)
   M.state.root_dir = root_dir
   utils.notify("Activated for " .. root_dir)
 
+  vim.api.nvim_exec_autocmds("User", { pattern = "TectonicActivated" })
+
   -- Layout: open main file + tree
   layout.setup(root_dir, M.config)
 
@@ -72,26 +74,23 @@ function M.activate(root_dir)
     end,
   })
 
-  -- Viewer: open PDF
+  -- Viewer: open PDF now and re-open on every successful build
   if M.config.viewer.enabled and M.config.viewer.auto_open then
     local pdf = utils.path_join(root_dir, M.config.viewer.pdf_path)
     if vim.fn.filereadable(pdf) == 1 then
       viewer.open(pdf, M.config)
-    else
-      -- Defer until first build completes
-      local group = vim.api.nvim_create_augroup("TectonicViewerDeferred", { clear = true })
-      vim.api.nvim_create_autocmd("User", {
-        group = group,
-        pattern = "TectonicBuildComplete",
-        once = true,
-        callback = function()
-          local deferred_pdf = utils.path_join(root_dir, M.config.viewer.pdf_path)
-          if vim.fn.filereadable(deferred_pdf) == 1 then
-            viewer.open(deferred_pdf, M.config)
-          end
-        end,
-      })
     end
+
+    vim.api.nvim_create_autocmd("User", {
+      group = vim.api.nvim_create_augroup("TectonicViewerReopen", { clear = true }),
+      pattern = "TectonicBuildComplete",
+      callback = function()
+        local build_pdf = utils.path_join(root_dir, M.config.viewer.pdf_path)
+        if vim.fn.filereadable(build_pdf) == 1 then
+          viewer.open(build_pdf, M.config)
+        end
+      end,
+    })
   end
 end
 
