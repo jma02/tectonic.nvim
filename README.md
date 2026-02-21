@@ -18,6 +18,9 @@ Make sure to install [Tectonic](https://tectonic-typesetting.github.io/).
 Initiate a Tectonic project using `tectonic -X new myproject`.
 Then call `nvim myproject`. That's it. Enjoy editing!
 
+## Preview
+<img width="1728" height="1084" alt="image" src="https://github.com/user-attachments/assets/ed847b82-917c-4c5d-8ffe-16a5d0732ea6" />
+
 ## Requirements
 
 - Neovim >= 0.8.0
