@@ -1,0 +1,110 @@
+*tectonic-nvim.txt*      Overleaf-like experience for Tectonic in Neovim
+
+==============================================================================
+Table of Contents                           *tectonic-nvim-table-of-contents*
+
+1. Introduction                             |tectonic-nvim-introduction|
+2. Requirements                             |tectonic-nvim-requirements|
+3. Installation                             |tectonic-nvim-installation|
+4. Configuration                            |tectonic-nvim-configuration|
+5. Commands                                 |tectonic-nvim-commands|
+6. Health Check                             |tectonic-nvim-health-check|
+
+==============================================================================
+1. Introduction                                    *tectonic-nvim-introduction*
+
+tectonic.nvim provides an Overleaf-like editing experience for Tectonic
+(https://tectonic-typesetting.github.io/), a modern LaTeX build system
+written in Rust.
+
+Features:
+- Auto-detects Tectonic projects via `Tectonic.toml`
+- Sets up file tree + editor layout
+- Runs `tectonic -X watch` for continuous compilation
+- Opens PDF in Skim for live preview (macOS)
+
+==============================================================================
+2. Requirements                                    *tectonic-nvim-requirements*
+
+Required:
+- Neovim >= 0.8.0
+- tectonic (https://tectonic-typesetting.github.io/)
+
+Optional:
+- nvim-tree.lua for file tree sidebar
+- Skim.app for PDF preview (macOS)
+
+==============================================================================
+3. Installation                                    *tectonic-nvim-installation*
+
+Using lazy.nvim:
+>lua
+    {
+      "jma2/tectonic.nvim",
+      ft = "tex",
+      opts = {},
+    }
+<
+
+==============================================================================
+4. Configuration                                  *tectonic-nvim-configuration*
+
+Default configuration:
+>lua
+    require("tectonic").setup({
+      auto_activate = true,
+      open_index = true,
+      layout = { main_file = "src/index.tex" },
+      tree = { enabled = true, width = 30 },
+      watcher = { auto_start = true, extra_args = {} },
+      viewer = {
+        enabled = true,
+        app_name = "Skim",
+        pdf_path = "build/default/default.pdf",
+        auto_open = true,
+        close_on_exit = false,
+      },
+    })
+<
+
+==============================================================================
+5. Commands                                            *tectonic-nvim-commands*
+
+                                                         *:TectonicActivate*
+:TectonicActivate       Manually activate the plugin for the current project.
+
+                                                            *:TectonicWatch*
+:TectonicWatch          Start tectonic watch mode.
+
+                                                        *:TectonicWatchStop*
+:TectonicWatchStop      Stop tectonic watch mode.
+
+                                                     *:TectonicWatchRestart*
+:TectonicWatchRestart   Restart tectonic watch mode.
+
+                                                          *:TectonicOpenPDF*
+:TectonicOpenPDF        Open the PDF in the configured viewer.
+
+                                                         *:TectonicClosePDF*
+:TectonicClosePDF       Close the PDF document in the viewer.
+
+                                                         *:TectonicFocusPDF*
+:TectonicFocusPDF       Bring the PDF viewer to the foreground.
+
+                                                       *:TectonicToggleTree*
+:TectonicToggleTree     Toggle the nvim-tree file explorer.
+
+                                                              *:TectonicLog*
+:TectonicLog            Show build output in a scratch buffer.
+
+==============================================================================
+6. Health Check                                    *tectonic-nvim-health-check*
+
+Run `:checkhealth tectonic` to verify your setup. It checks for:
+- tectonic binary in PATH
+- Skim.app (macOS)
+- nvim-tree installation
+- Tectonic.toml in current directory
+
+==============================================================================
+vim:tw=78:ts=8:noet:ft=help:norl:
