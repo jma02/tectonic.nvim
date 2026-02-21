@@ -37,7 +37,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 {
-  "jma2/tectonic.nvim",
+  "jma02/tectonic.nvim",
   opts = {},
 }
 ```
