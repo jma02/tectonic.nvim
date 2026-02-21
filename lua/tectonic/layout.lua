@@ -32,15 +32,10 @@ function M.setup(root_dir, config)
   end
 end
 
---- Open nvim-tree with pcall guard.
+--- Open nvim-tree.
 ---@param config TectonicConfig
 function M._open_tree(config)
-  local ok, tree_api = pcall(require, "nvim-tree.api")
-  if not ok then
-    utils.warn("nvim-tree not found — file tree disabled")
-    return
-  end
-
+  local tree_api = require("nvim-tree.api")
   tree_api.tree.open()
 
   -- Return focus to the editor window (nvim-tree opens and takes focus)
@@ -49,12 +44,7 @@ end
 
 --- Toggle nvim-tree.
 function M.toggle_tree()
-  local ok, tree_api = pcall(require, "nvim-tree.api")
-  if not ok then
-    utils.warn("nvim-tree not installed")
-    return
-  end
-
+  local tree_api = require("nvim-tree.api")
   tree_api.tree.toggle()
 end
 

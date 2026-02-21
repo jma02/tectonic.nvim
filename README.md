@@ -12,14 +12,19 @@ Auto-detects Tectonic projects, sets up a file tree + editor layout, runs contin
 - Live PDF preview in Skim (macOS)
 - Graceful degradation when optional dependencies are missing
 
+## Quick Start
+
+Make sure to install [Tectonic](https://tectonic-typesetting.github.io/).
+Initiate a Tectonic project using `tectonic -X new myproject`.
+Then call `nvim myproject`. That's it. Enjoy editing!
+
 ## Requirements
 
 - Neovim >= 0.8.0
 - [tectonic](https://tectonic-typesetting.github.io/) — Rust-based LaTeX build system
+- [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua) — file tree sidebar
 
 ### Optional
-
-- [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua) — file tree sidebar
 - [Skim](https://skim-app.sourceforge.io/) — PDF viewer with auto-reload (macOS)
 
 ## Installation

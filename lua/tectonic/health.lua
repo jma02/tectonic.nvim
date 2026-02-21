@@ -31,7 +31,7 @@ function M.check()
   if ok then
     vim.health.ok("nvim-tree is installed")
   else
-    vim.health.warn("nvim-tree not installed — file tree will be disabled")
+    vim.health.error("nvim-tree not installed (required)")
   end
 
   -- Check Tectonic.toml in cwd
