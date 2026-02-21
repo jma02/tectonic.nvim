@@ -15,7 +15,7 @@ M.config = {
   watcher = { auto_start = true, extra_args = {} },
   viewer = {
     enabled = true,
-    app_name = "Skim",
+    app_name = vim.fn.has("mac") == 1 and "Skim" or "zathura",
     pdf_path = "build/default/default.pdf",
     auto_open = true,
     close_on_exit = false,

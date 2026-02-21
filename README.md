@@ -27,8 +27,8 @@ Then call `nvim myproject`. That's it. Enjoy editing!
 - [tectonic](https://tectonic-typesetting.github.io/) — Rust-based LaTeX build system
 - [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua) — file tree sidebar
 
-### Optional
-- [Skim](https://skim-app.sourceforge.io/) — PDF viewer with auto-reload (macOS)
+- [Skim](https://skim-app.sourceforge.io/) — PDF viewer (macOS)
+- [zathura](https://pwmt.org/projects/zathura/) — PDF viewer (Linux)
 
 ## Installation
 

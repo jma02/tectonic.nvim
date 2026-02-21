@@ -2,32 +2,35 @@ local utils = require("tectonic.utils")
 
 local M = {}
 
---- Open a PDF in the configured viewer (background, no focus steal).
+--- Open a PDF in the platform viewer (Skim on macOS, zathura on Linux).
 ---@param pdf_path string
 ---@param config TectonicConfig
 function M.open(pdf_path, config)
-  local app = config.viewer.app_name
-
-  if vim.fn.has("mac") ~= 1 then
-    utils.warn("PDF viewer requires macOS (open command)")
+  local cmd
+  if vim.fn.has("mac") == 1 then
+    cmd = { "open", "-g", "-a", config.viewer.app_name, pdf_path }
+  elseif vim.fn.has("linux") == 1 then
+    cmd = { config.viewer.app_name, pdf_path }
+  else
+    utils.warn("Unsupported platform — viewer requires macOS or Linux")
     return
   end
 
-  vim.fn.jobstart({ "open", "-g", "-a", app, pdf_path }, {
+  vim.fn.jobstart(cmd, {
+    detach = true,
     on_exit = function(_, code)
       if code ~= 0 then
-        utils.warn("Failed to open " .. app .. " (exit code " .. code .. ")")
+        utils.warn("Failed to open PDF (exit code " .. code .. ")")
       end
     end,
   })
 end
 
---- Close a specific PDF document in Skim via AppleScript.
+--- Close a specific PDF document in Skim via AppleScript (macOS only).
 ---@param pdf_path string
 ---@param config TectonicConfig
 function M.close(pdf_path, config)
-  local app = config.viewer.app_name
-  if app ~= "Skim" then
+  if vim.fn.has("mac") ~= 1 or config.viewer.app_name ~= "Skim" then
     return
   end
 
@@ -50,18 +53,9 @@ end
 --- Bring the viewer app to the foreground.
 ---@param config TectonicConfig
 function M.focus(config)
-  local app = config.viewer.app_name
-  if vim.fn.has("mac") ~= 1 then
-    return
+  if vim.fn.has("mac") == 1 then
+    vim.fn.jobstart({ "open", "-a", config.viewer.app_name })
   end
-
-  vim.fn.jobstart({ "open", "-a", app }, {
-    on_exit = function(_, code)
-      if code ~= 0 then
-        utils.warn("Failed to focus " .. app)
-      end
-    end,
-  })
 end
 
 return M

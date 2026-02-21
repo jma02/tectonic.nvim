@@ -15,15 +15,21 @@ function M.check()
     vim.health.warn("tectonic not found in PATH")
   end
 
-  -- Check Skim (macOS only)
+  -- Check PDF viewer
   if vim.fn.has("mac") == 1 then
     if vim.fn.isdirectory("/Applications/Skim.app") == 1 then
       vim.health.ok("Skim.app found")
     else
-      vim.health.warn("Skim.app not found in /Applications")
+      vim.health.error("Skim.app not found in /Applications (required on macOS)")
+    end
+  elseif vim.fn.has("linux") == 1 then
+    if vim.fn.executable("zathura") == 1 then
+      vim.health.ok("zathura found")
+    else
+      vim.health.error("zathura not found in PATH (required on Linux)")
     end
   else
-    vim.health.info("Skim check skipped (not macOS)")
+    vim.health.error("Unsupported platform — requires macOS or Linux")
   end
 
   -- Check nvim-tree
